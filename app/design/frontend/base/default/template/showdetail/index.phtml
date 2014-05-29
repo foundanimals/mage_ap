@@ -1,0 +1,102 @@
+<?php
+  $currentURL = Mage::helper('showdetail/data')->currentURL();
+  if (strlen($currentURL) == 0){
+    $currentURL = 'no id';
+  }
+  $id = '10820963';
+  $key = '95052e1b892a28c5f89f696edf39b4ec';
+  $url = 'http://api.adoptapet.com/search/limited_pet_details?pet_id='. $id .'&key='. $key  .'&output=json';
+  $showDetail = Mage::helper('showdetail/data')->showDetail($url);
+
+  $arrayData = json_decode($showDetail);
+?>
+
+<style>
+.showdetail-index-index {
+}
+.showdetail-index-index .main {
+  background: #fff;
+}
+
+.showdetail-index-index .breadcrumbs {
+  background: #fcfcfc;
+}
+
+
+#petDetail {
+  clear: both;
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+}
+
+.row {
+  clear: both;
+  width: 100%;
+}
+.col {
+  float: left;
+}
+.col33 {
+  width: 33%;
+}
+
+</style>
+
+<div id="nav-buffer">
+</div>
+
+<div id="petDetail" class="std">
+  <div class="row">
+    <div class="pet-name">
+      Stanley
+    </div>
+
+    <div class="return-to-ap">
+      Back to results
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col col33 pet-photos">
+      <img src="https://s3.amazonaws.com/pet-uploads.adoptapet.com/1/2/4/120331392.jpg?336w" />
+    </div>
+    <div class="col col33 pet-info">
+      <ul>
+        <li><span>Breed:</span> <?php  ?></li>
+        <li><span>Color:</span> White, Black, Red, Golden</li>
+        <li><span>Size:</span> Small 25 lbs (11 kg) or less</li>
+        <li><span>Sex:</span> Male</li>
+      </ul>
+    </div>
+    <div class="col col33 pet-bio">No bio data</div>
+  </div>
+
+  <div class="row"></div>
+</div>
+
+<hr/>
+
+<div id="locationFooter">
+  Location footer
+</div>
+
+<hr/>
+
+<div class="std">
+
+  <?php
+    echo '<ul>';
+    echo '<li>'. $currentURL .'</li>';
+    echo '<li>'. $id .'</li>';
+    echo '<li>'. $key .'</li>';
+    echo '<li>'. $url .'</li>';
+    echo '<li>'. $showDetail .'</li>';
+    echo '</ul>';
+  ?>
+
+  <pre>
+  <?php print_r($arrayData); ?>
+  </pre>
+
+</div>
