@@ -6,6 +6,20 @@
     </Fanimal_ShowDetail>
   </modules>
   <frontend>
+
+
+    <!--
+<rewrite>
+       <fancy_url>
+                 <from><![CDATA[/adoptablepets\/(.+)\/(.+)/]]></from>
+                 <to><![CDATA[showdetail/index/index/$1/$2/]]></to>
+                     <complete>1</complete>
+           </fancy_url>
+       </rewrite>
+
+
+    -->
+
     <routers>
       <showdetail>
         <use>standard</use>
