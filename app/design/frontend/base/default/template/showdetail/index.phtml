@@ -3,11 +3,25 @@
   if (strlen($currentURL) == 0){
     $currentURL = 'no id';
   }
-  $id = '10820963';
+  
+  $urlString = Mage::helper('core/url')->getCurrentUrl();
+  $url_ = Mage::getSingleton('core/url')->parseUrl($urlString);
+  $path = $url_->getPath();
+
+  $id = '';
+
+  // tests to ensure path is correct
+  if (strlen($currentURL) == 8 && is_numeric($currentURL)){
+    $id = $currentURL;
+  }
+  else {
+    $id = '10820963';
+  }
+
   $key = '95052e1b892a28c5f89f696edf39b4ec';
   $url = 'http://api.adoptapet.com/search/pet_details?pet_id='. $id .'&key='. $key  .'&output=json';
+  
   $showDetail = Mage::helper('showdetail/data')->showDetail($url);
-
   $arrayData = json_decode($showDetail, true);
 ?>
 
@@ -314,16 +328,12 @@
 
 
 <pre>
-<?php
-
-$urlString = Mage::helper('core/url')->getCurrentUrl();
-$url_ = Mage::getSingleton('core/url')->parseUrl($urlString);
-$path = $url_->getPath();
-
-echo $path;
-echo '<br/>';
-?>
+  <?php
+    echo $path;
+    echo '<br/>';
+  ?>
 </pre>
+
 <div class="std">
   <?php
     echo '<ul>';
@@ -336,7 +346,7 @@ echo '<br/>';
   ?>
 
   <pre>
-  <?php print_r($arrayData); ?>
+    <?php print_r($arrayData); ?>
   </pre>
 </div>
 
