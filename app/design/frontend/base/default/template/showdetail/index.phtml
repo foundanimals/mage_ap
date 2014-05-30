@@ -5,11 +5,15 @@
   }
   $id = '10820963';
   $key = '95052e1b892a28c5f89f696edf39b4ec';
-  $url = 'http://api.adoptapet.com/search/limited_pet_details?pet_id='. $id .'&key='. $key  .'&output=json';
+  $url = 'http://api.adoptapet.com/search/pet_details?pet_id='. $id .'&key='. $key  .'&output=json';
   $showDetail = Mage::helper('showdetail/data')->showDetail($url);
 
-  $arrayData = json_decode($showDetail);
+  $arrayData = json_decode($showDetail, true);
 ?>
+
+<link rel="stylesheet" href="/js/responsive_carousel/responsive-carousel.css" media="screen">
+<link rel="stylesheet" href="/js/responsive_carousel/responsive-carousel.pagination.css" media="screen">
+
 
 <style>
 .showdetail-index-index {
@@ -21,21 +25,38 @@
   background: #f7f7f7;
 }
 
-
 .row {
   position: relative;
   clear: both;
   width: 100%;
 }
+.row.row-header {
+  height: 50px;
+  margin-bottom: 20px;
+
+  background: rgb(247,247,247);
+  background: -moz-linear-gradient(left,  rgba(247,247,247,1) 25%, rgba(255,255,255,1) 100%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(25%,rgba(247,247,247,1)), color-stop(100%,rgba(255,255,255,1)));
+  background: -webkit-linear-gradient(left,  rgba(247,247,247,1) 25%,rgba(255,255,255,1) 100%);
+  background: -o-linear-gradient(left,  rgba(247,247,247,1) 25%,rgba(255,255,255,1) 100%);
+  background: -ms-linear-gradient(left,  rgba(247,247,247,1) 25%,rgba(255,255,255,1) 100%);
+  background: linear-gradient(to right,  rgba(247,247,247,1) 25%,rgba(255,255,255,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#ffffff',GradientType=1 );
+}
 .col {
   float: left;
 }
 .col33 {
-  width: 29%;
-  margin: 0 2%;
+  width: 33%;
 }
 .col66 {
   width: 66%;
+}
+.col100 {
+  width: 100%;
+}
+.col-padding {
+  padding: 0 5%;
 }
 
 #petDetail {
@@ -60,7 +81,7 @@
 #petDetail .pet-name {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 0.2%;
 
   color: #00778b;
   font-size: 42px;
@@ -76,13 +97,19 @@
   font-size: 20px;
   font-weight: bold;
   line-height: 50px;
+  cursor: pointer;
+}
+#petDetail .return-to-ap:hover {
+  text-decoration: underline;
 }
 
+#petDetail .pet-data {
+  min-height: 330px;
+}
 #petDetail .pet-photos {
   position: relative;
 }
 #petDetail .pet-photos img {
-  max-width: 100%;
 }
 
 #petDetail .pet-info {
@@ -102,7 +129,92 @@
 }
 
 #locationFooter {
+  color: #6a6a6c;
+  font-size: 18px;
+  padding-bottom: 20px;
   background: rgba(247,247,247,1);
+}
+#locationFooter .location-title {
+  position: absolute;
+  top: 0;
+  left: 2%;
+  color: #00778b;
+  font-size: 34px;
+  font-weight: bold;
+  line-height: 54px;
+  cursor: pointer;
+}
+#locationFooter .location-title:hover {
+  text-decoration: underline;
+}
+#locationFooter ul {
+  list-style: disc outside;
+  padding-left: 1.5em;
+}
+#locationFooter strong {
+  color: #454547;
+}
+
+.carousel {
+ position: relative;
+}
+.carousel-item {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+.carousel-item img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  max-height: 100%;
+  margin: auto;
+}
+.carousel-nav {
+  position: absolute;
+  height: 30px;
+  bottom: -30px;
+  _background: red;
+  z-index: 4;
+  width: 100%;
+}
+.carousel-nav a {
+  text-decoration: none;
+  font-size: .8em;
+  font-family: 'proximanova-regular',Arial, Helvetica, sans-serif;
+  background: #fff;
+  color: #00778b;
+  opacity: .8;
+  padding: .6em 1em .4em;
+  position: absolute;
+  bottom: 0;
+  font-weight: bold;
+}
+.carousel-nav a.prev {
+  left: 0;
+}
+.carousel-nav a.next {
+  right: 0;
+}
+.carousel-nav-paginated .carousel-active-page a {
+  background: #00778b;
+  color: #fff;
+  opacity: .8;
+}
+.carousel-nav-paginated ol {
+  margin: 0 auto;
+  padding: 0;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+.carousel img {
+  width: 100%;
+  max-width: 460px;
+  max-height: 300px;
 }
 </style>
 
@@ -112,7 +224,7 @@
 <div id="petDetail" class="std">
   <div class="detail-header row">
     <div class="pet-name">
-      Stanley
+      <?php echo $arrayData['pet']['pet_name']; ?>
     </div>
 
     <div class="return-to-ap">
@@ -120,19 +232,35 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row pet-data">
     <div class="col col33 pet-photos">
-      <img src="https://s3.amazonaws.com/pet-uploads.adoptapet.com/1/2/4/120331392.jpg?336w" />
+
+        <div class="carousel" data-paginate>
+          <?php 
+            $images = $arrayData['pet']['images'];
+            foreach ($images as $image){
+              echo '<div><img src="'. $image['original_url'] .'" width="'. $image['original_width'] .'" height="'. $image['original_height'] .'" /></div>';
+            }
+          ?>
+        </div>
     </div>
+
     <div class="col col33 pet-info">
-      <ul>
-        <li><span>Breed:</span> <?php  ?></li>
-        <li><span>Color:</span> White, Black, Red, Golden</li>
-        <li><span>Size:</span> Small 25 lbs (11 kg) or less</li>
-        <li><span>Sex:</span> Male</li>
-      </ul>
+      <div class="col-padding">
+        <ul>
+          <li><span>Breed:</span> <?php echo $arrayData['pet']['primary_breed']; ?></li>
+          <li><span>Color:</span> <?php echo $arrayData['pet']['color']; ?></li>
+          <li><span>Size:</span> <?php echo $arrayData['pet']['size']; ?></li>
+          <li><span>Sex:</span> <?php echo $arrayData['pet']['sex']; ?></li>
+        </ul>
+      </div>
     </div>
-    <div class="col col33 pet-bio">No bio data</div>
+
+    <div class="col col33 pet-bio">
+      <div class="col-padding">
+        <?php echo $arrayData['pet']['description']; ?>
+      </div>
+    </div>
   </div>
 
   <div class="row"></div>
@@ -141,18 +269,24 @@
 
 
 <div id="locationFooter">
-  <div class="row">Adopt & Shop - Culver City</div>
+  <div class="row row-header">
+    <div class="col col100">
+      <div class="location-title">
+        Adopt & Shop - Culver City
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col col33">
-      <div class="address_phone">
+      <div class="col-padding address_phone">
         4235 Sepulveda Blvd.<br/>
         Culver City, CA 90230<br/><br/>
         (310) 93-FOUND (933-6863)<br/><br/>
       </div>
     </div>
     <div class="col col33">
-      <div class="hours">
-        Store Hours:<br/>
+      <div class="col-padding hours">
+        <strong>Store Hours:</strong><br/>
         Monday through Friday:<br/>
         10:00am - 9:00pm<br/><br/>
         Saturday and Sunday:<br/>
@@ -161,8 +295,8 @@
     </div>
 
     <div class="col col33">
-      <div class="services">
-        Services Offered:<br/>
+      <div class="col-padding services">
+        <strong>Services Offered:</strong><br/>
         <ul>
           <li>Dog Training</li>
           <li>Dog Daycare</li>
@@ -179,7 +313,17 @@
 </div>
 
 
+<pre>
+<?php
 
+$urlString = Mage::helper('core/url')->getCurrentUrl();
+$url_ = Mage::getSingleton('core/url')->parseUrl($urlString);
+$path = $url_->getPath();
+
+echo $path;
+echo '<br/>';
+?>
+</pre>
 <div class="std">
   <?php
     echo '<ul>';
@@ -195,3 +339,13 @@
   <?php print_r($arrayData); ?>
   </pre>
 </div>
+
+<script src="/js/responsive_carousel/responsive-carousel.js"></script>
+<script src="/js/responsive_carousel/responsive-carousel.pagination.js"></script>
+<script>
+(function($){
+  $(function(){
+    $(".carousel").carousel();
+  });
+}(jQuery));
+</script>

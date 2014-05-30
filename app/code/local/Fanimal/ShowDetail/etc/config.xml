@@ -8,17 +8,13 @@
   <frontend>
 
 
-    <!--
-<rewrite>
+      <rewrite>
        <fancy_url>
-                 <from><![CDATA[/adoptablepets\/(.+)\/(.+)/]]></from>
-                 <to><![CDATA[showdetail/index/index/$1/$2/]]></to>
+                 <from><![CDATA[/showdetail\/(.+)/]]></from>
+                 <to><![CDATA[showdetail/index/index/$1/]]></to>
                      <complete>1</complete>
            </fancy_url>
        </rewrite>
-
-
-    -->
 
     <routers>
       <showdetail>
