@@ -1,0 +1,480 @@
+<style>
+    body {
+        background: #eee;
+    }
+    #ap_container {
+        position: relative;
+        width: 100%;
+        min-height: 365px;
+        padding-top: 71px;
+    }
+
+    #ap_loading {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        color: #fff;
+        font-size: 18px;
+        font-family: "arial-rounded-bold";
+        text-align: center;
+        padding-top: 12%;
+        padding-bottom: 18%;
+        background: rgba(49, 120, 140, 0.7);
+        z-index: 100;
+        border-radius: 3px;
+    }
+    .ready #ap_loading {
+        display: none;
+    }
+
+    #ap_layout {
+        position: relative;
+        width: 960px;
+        margin: 0 auto;
+    }
+    .ap_left {
+        float: left;
+        width: 229px;
+    }
+    .ap_body {
+        position: relative;
+        float: right;
+        width: 720px;
+    }
+
+
+    #ap_filters {
+        width: 100%;
+    }
+    #ap_filters .title {
+        width: 100%;
+        height: 70px;
+        color: #fff;
+        font-size: 20px;
+        font-family: "arial-rounded-bold";
+        text-align: center;
+        line-height: 70px;
+        background: #31788C;
+        border-radius: 3px 3px 0 0;
+    }
+
+    #ap_filters .filter-key {
+        position: relative;
+        width: 100%;
+        min-height: 70px;
+        background: #fff;
+
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    #ap_filters .filter-key .sub-title {
+        position: absolute;
+        width: 100%;
+        height: 65px;
+        min-height: 65px;
+        color: #31788C;
+        font-size: 16px;
+        text-align: center;
+        line-height: 70px;
+        background: #fff;
+    }
+    #ap_filters .filter-key.active .sub-title {
+        display: none;
+    }
+    #ap_filters .active-filters {
+        float: left;
+        width: 80%;
+        padding: 5% 0;
+        margin: 0 10%;
+    }
+     #ap_filters .active-filters div {
+        position: relative;
+        float: left;
+        color: #31788C;
+        font-size: 14px;
+        padding: 0 20px 0 1.5%;
+        margin: 0 1.5% 1% 0;
+        background: #eee;
+        cursor: pointer;
+        white-space: nowrap;
+        border-radius: 3px;
+     }
+     #ap_filters .active-filters div:last-child {
+        margin-right: 0;
+        margin-bottom: 0;
+     }
+     #ap_filters .active-filters div span {
+        overflow: hidden;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 7px;
+        height: 7px;
+        text-indent: -2000px;
+        background: url(/img/filter_close.gif) center center no-repeat transparent;
+    }
+
+    #ap_filters .controls {
+        width: 100%;
+        padding-bottom: 25%;
+        background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,255,1) 75%, rgba(255,255,255,0) 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(75%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0)));
+        background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
+        background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
+        background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
+        background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
+    }
+
+    #ap_filters ul {
+        clear: both;
+        width: 100%;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        -moz-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+    #ap_filters ul:last-child {
+        margin-bottom: 10%;
+    }
+    #ap_filters ul lh {
+        display: block;
+        width: 80%;
+        color: #31788C;
+        font-size: 16px;
+        font-family: "arial-rounded-bold";
+        text-transform: uppercase;
+        padding: 5% 0;
+        margin: 0 10%;
+        background: url(/img/filter_plus.png) right center no-repeat transparent;
+        border-top: 1px solid #DCDCDC;
+        cursor: pointer;
+    }
+    #ap_filters ul.open lh {
+        background: url(/img/filter_minus.png) right center no-repeat transparent;
+    } 
+    #ap_filters ul.open li {
+        display: block;
+    }
+    #ap_filters ul li {
+        overflow: hidden;
+        position: relative;
+        display: none;
+        font-size: 14px;
+        font-family: 'proximanova-regular';
+        width: 78%;
+        padding: 0 1%;
+        margin: 0 10%;
+        margin-bottom: 1%;
+        cursor: pointer;
+        white-space: nowrap; 
+    }
+    #ap_filters ul li:last-child {
+        margin-bottom: 5%;
+    }
+    #ap_filters ul li:hover {
+        color: #31788C;
+    }
+    #ap_filters ul li.active {
+        color: #31788C;
+        background: #eee;
+        border-radius: 3px;
+    }
+    #ap_filters ul li span {
+        overflow: hidden;
+        display: none;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 7px;
+        height: 7px;
+        text-indent: -2000px;
+        background: url(/img/filter_close.gif) center center no-repeat transparent;
+    }
+    #ap_filters ul li.active span {
+        display: block;
+    }
+    
+
+    #ap_sorting {
+        display: inline-block;
+        color: #eee;
+        width: 100%;
+        font-size: 12px;
+        padding: 0.5% 0;
+        margin-bottom: 7px;
+        background: #fff;
+        border-radius: 3px;
+    }
+    #ap_sorting .range {
+        float: right;
+        padding-right: 1%;
+    }
+    #ap_sorting .range > div {
+        float: left;
+        color: #7C837C;
+    }
+
+
+
+    #ap_sorting .viewable {
+        float: left;
+        padding-left: 30px;
+    }
+    #ap_sorting .viewable span {
+        display: block;
+        float: left;
+        color: #7C837C;
+        padding-top: 12px;
+    }
+    #ap_sorting .viewable .viewable_dropdown {
+        float: left;
+        width: 74px;
+        height: 34px;
+        color: #7C837C;
+        margin-top: 5px;
+        margin-left: 5px;
+        border: 1px solid #C9C9C9;
+    }
+    #ap_sorting .sorting {
+        float: left;
+        padding-left: 30px;
+    }
+    #ap_sorting .sorting span {
+        display: block;
+        float: left;
+        color: #7C837C;
+        padding-top: 12px;
+    }
+    #ap_sorting .sorting .sorting_dropdown {
+        float: left;
+        width: 158px;
+        height: 34px;
+        color: #7C837C;
+        margin-top: 5px;
+        margin-left: 5px;
+        border: 1px solid #C9C9C9;
+    }
+    #ap_sorting .paging {
+        float: left;
+        padding-left: 30px;
+    }
+    #ap_sorting .paging span,
+    #ap_sorting .paging_controls span {
+        display: block;
+        float: left;
+        color: #7C837C;
+        padding-top: 12px;
+    }
+    #ap_sorting .paging_controls {
+        float: left;
+    }
+    #ap_sorting .paging_controls a {
+        float: left;
+        color: #7C837C;
+        text-decoration: none;
+        padding-top: 12px;
+    }
+    #ap_sorting .paging_controls a:hover {
+        color: #31788C;
+        cursor: pointer;
+    }
+    #ap_sorting .paging_controls a.active {
+        color: #31788C;
+        pointer-events: none;
+    }
+
+
+    #ap_content {
+        clear: both;
+        width: 103%;
+    }
+    .pet {
+        position: relative;
+        float: left;
+        width: 169px;
+        height: 192px;
+        margin: 0 12px 12px 0;
+        background: url(img/pet_background.png) repeat-x;
+        border: 1px solid #CAC9C7;
+        cursor: pointer;
+    }
+    .pet .pet_name {
+        position: absolute;
+        top: 2%;
+        left: 0;
+        width: 100%;
+        color: #30778B;
+        font-weight: bold;
+        text-align: center;
+    }
+    .pet .photo_wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: -7%;
+    }
+    .pet .pet_photo {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+    }
+    .pet .pet_info {
+        position: absolute;
+        left: 0;
+        bottom: 15%;
+        width: 100%;
+        color: #30778B;
+        text-align: center;
+    }
+    .pet .pet_info span {
+        text-transform: capitalize;
+    }
+    .pet .pet_city {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    
+
+    #ap_modal {
+        display: none;
+        position: fixed;
+        top: 5%;
+        left: 15%;
+        width: 70%;
+        background: rgba(49, 120, 140, 0.7);
+        border-radius: 7px;
+        z-index: 150;
+    }
+    .details_active #ap_modal {
+        display: block;
+    }
+
+    #ap_modal_mask {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.5);
+        z-index: 100;
+    }
+    .details_active #ap_modal_mask {
+        display: block;
+    }
+
+    #ap_modal_close {
+        position: absolute;
+        top: -3%;
+        right: -3%;
+        color: #fff;
+        padding: 3%;
+        background: rgba(49, 120, 140, 0.7);
+        border-radius: 9999px;
+        cursor: pointer;
+    }
+
+    #ap_modal #ap_modal_body {
+        overflow: hidden;
+        margin: 1%;
+        background: #fff;
+        border-radius: 4px;
+    }
+
+    #ap_modal .ap_modal_body #ap_modal_content {
+        padding: 2%;
+    }
+
+    #ap_modal_content div.no-value {
+        color: red !important;
+    }
+
+    #ap_modal_content .pet_details_pure {
+        display: inline-block;
+    }
+</style>
+</head>
+<body>
+
+<div id="ap_container">
+    <div id="ap_modal_mask"></div>
+
+    <div id="ap_modal">
+        <div id="ap_modal_close">
+            close
+        </div>
+
+        <div id="ap_modal_body">
+            <div id="ap_modal_content">
+                <div class="pet_details_name">Name: <span></span></div>
+                <div class="pet_details_color">Color: <span></span></div>
+                <div class="pet_details_species">Species: <span></span></div>
+                <div class="pet_details_age">Age: <span></span></div>
+                <div class="pet_details_sex">Sex: <span></span></div>
+                <div class="pet_details_size">Size: <span></span></div>
+                <div class="pet_details_hair">Hair Length: <span></span></div>
+                <div class="pet_details_primary">Primary Breed: <span></span> <div class="pet_details_pure"><span></span></div> </div>
+                <div class="pet_details_secondary">Secondary Breed: <span></span></div>
+                <div class="pet_details_special_needs">Special Needs: <span></span></div>
+                <div class="pet_details_city">City: <span></span></div>
+                <div class="pet_details_photos"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="ap_layout">
+        <div id="ap_loading">loading</div>
+
+        <div class="ap_left">
+            <div id="ap_filters">
+                <div class="title">Adoptable Pets</div>
+                <div class="filter-key">
+                    <div class="sub-title">Filter By:</div>
+                    <div class="active-filters"></div>
+                </div>
+                <div class="controls"></div>
+            </div>
+        </div>
+
+        <div class="ap_body">
+            <div id="ap_sorting">
+                <div class="range"><div>showing&nbsp;</div> <div class="range_start">0</div> <div>&nbsp;of&nbsp;</div> <div class="range_end">0</div> <div>&nbsp;records</div></div>
+                
+                <!--
+                <div class="viewable"><span>View</span> <div class="viewable_dropdown"></div></div>
+                <div class="sorting"><span>Sort by</span> <div class="sorting_dropdown"></div></div>
+                <div class="paging"><span>Page:&nbsp;</span> <div class="paging_controls"><a href="" class="active">1</a><span>&nbsp;</span> <a href="">2</a><span>&nbsp;</span> <a href="">3</a><span>&nbsp;</span> <a href="" class="last">></a><span>&nbsp;</span> </div></div>
+                -->
+            </div>
+            <div id="ap_content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+<script src="js/vendor/jquery-1.11.0.min.js"></script>
+-->
+
+<script src="js/showDetail/vendor/underscore-min.js"></script>
+<script src="js/showDetail/ap_app.js"></script>
+

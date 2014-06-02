@@ -1,62 +1,54 @@
 <?xml version="1.0"?>
 <config>
   <modules>
-    <Fanimal_ShowDetail>
+    <Fanimal_ShowApp>
       <version>0.1.0</version>
-    </Fanimal_ShowDetail>
+    </Fanimal_ShowApp>
   </modules>
   <frontend>
-      <!--
-      <rewrite>
-       <fancy_url>
-                 <from><![CDATA[/adoptable-pets\/pet]]></from>
-                 <to><![CDATA[/adoptable-pets-detail]]></to>
-                     <complete>1</complete>
-           </fancy_url>
-       </rewrite>
-      -->
 
     <routers>
-      <showdetail>
+      <showapp>
         <use>standard</use>
           <args>
-            <module>Fanimal_ShowDetail</module>
-            <frontName>adoptable-pet-detail</frontName>
+            <module>Fanimal_ShowApp</module>
+            <frontName>adoptable-pets</frontName>
           </args>
-      </showdetail>
-
+      </showapp>
     </routers>
+
 		<layout>
 		  <updates>
-			<showdetail>
-			  <file>showdetail.xml</file>
-			</showdetail>
+			<showapp>
+			  <file>showapp.xml</file>
+			</showapp>
 		  </updates>
 		</layout>
   </frontend>
+
   <global>
     <helpers>
-      <showdetail>
-        <class>Fanimal_ShowDetail_Helper</class>
-      </showdetail>
+      <showapp>
+        <class>Fanimal_ShowApp_Helper</class>
+      </showapp>
     </helpers>
 	<blocks>
-	  <showdetail>
-		<class>Fanimal_ShowDetail_Block</class>
-	  </showdetail>
+	  <showapp>
+		<class>Fanimal_ShowApp_Block</class>
+	  </showapp>
 	</blocks>
 	<models>
-	  <showdetail>
-		<class>Fanimal_ShowDetail_Model</class>
-		<resourceModel>showdetail_mysql4</resourceModel>
-	  </showdetail>
+	  <showapp>
+		<class>Fanimal_ShowApp_Model</class>
+		<resourceModel>showapp_mysql4</resourceModel>
+	  </showapp>
 	</models>
     <events>
 	  <cms_page_render> <!-- identifier of the event we want to catch -->
         <observers>
           <cms_page_render_handler> <!-- identifier of the event handler -->
             <type>model</type> <!-- class method call type; valid are model, object and singleton -->
-            <class>showdetail/observer</class> <!-- observers class alias -->
+            <class>showapp/observer</class> <!-- observers class alias -->
             <method>showAPI</method>  <!-- observer's method to be called -->
             <args></args> <!-- additional arguments passed to observer -->
           </cms_page_render_handler>

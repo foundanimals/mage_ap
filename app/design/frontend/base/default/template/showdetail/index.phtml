@@ -23,6 +23,48 @@
   
   $showDetail = Mage::helper('showdetail/data')->showDetail($url);
   $arrayData = json_decode($showDetail, true);
+
+  $pet_breed = '';
+  $pet_color = '';
+  $pet_size = '';
+  $pet_sex = '';
+  $pet_description = '';
+  $pet_location = $arrayData['pet']['addr_city'];
+
+  if (strlen($arrayData['pet']['primary_breed']) > 0){
+    $pet_breed = $arrayData['pet']['primary_breed'];
+  }
+  else {
+    $pet_breed = 'unlisted';
+  }
+
+  if (strlen($arrayData['pet']['color']) > 0){
+    $pet_color = $arrayData['pet']['color'];
+  }
+  else {
+    $pet_color = 'unlisted';
+  }
+
+  if (strlen($arrayData['pet']['size']) > 0){
+    $pet_size = $arrayData['pet']['size'];
+  }
+  else {
+    $pet_size = 'unlisted';
+  }
+
+  if (strlen($arrayData['pet']['sex']) > 0){
+    $pet_sex = $arrayData['pet']['sex'];
+  }
+  else {
+    $pet_sex = 'unlisted';
+  }
+
+  if (strlen($arrayData['pet']['description']) > 0){
+    $pet_description = $arrayData['pet']['description'];
+  }
+  else {
+    $pet_description = 'unlisted';
+  }
 ?>
 
 <link rel="stylesheet" href="/js/responsive_carousel/responsive-carousel.css" media="screen">
@@ -96,7 +138,6 @@
   position: absolute;
   top: 0;
   left: 0.2%;
-
   color: #00778b;
   font-size: 42px;
   font-weight: bold;
@@ -106,11 +147,11 @@
   position: absolute;
   top: 0;
   right: 1.5%;
-
   color: #00778b;
   font-size: 20px;
   font-weight: bold;
   line-height: 50px;
+  text-decoration: none;
   cursor: pointer;
 }
 #petDetail .return-to-ap:hover {
@@ -118,7 +159,7 @@
 }
 
 #petDetail .pet-data {
-  min-height: 330px;
+  min-height: 359px;
 }
 #petDetail .pet-photos {
   position: relative;
@@ -156,6 +197,7 @@
   font-size: 34px;
   font-weight: bold;
   line-height: 54px;
+  text-decoration: none;
   cursor: pointer;
 }
 #locationFooter .location-title:hover {
@@ -175,7 +217,7 @@
 .carousel-item {
   position: relative;
   width: 100%;
-  height: 300px;
+  height: 329px;
 }
 .carousel-item img {
   position: absolute;
@@ -183,7 +225,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  max-width: 100%;
+  max-width: 315px;
   max-height: 100%;
   margin: auto;
 }
@@ -191,9 +233,9 @@
   position: absolute;
   height: 30px;
   bottom: -30px;
-  _background: red;
   z-index: 4;
-  width: 100%;
+  width: 90%;
+  margin: 0 5%;
 }
 .carousel-nav a {
   text-decoration: none;
@@ -225,11 +267,6 @@
   width: 100%;
   text-align: center;
 }
-.carousel img {
-  width: 100%;
-  max-width: 460px;
-  max-height: 300px;
-}
 </style>
 
 <div id="nav-buffer">
@@ -241,9 +278,9 @@
       <?php echo $arrayData['pet']['pet_name']; ?>
     </div>
 
-    <div class="return-to-ap">
+    <a class="return-to-ap" href="/adoptable-pets">
       Back to results >
-    </div>
+    </a>
   </div>
 
   <div class="row pet-data">
@@ -262,17 +299,17 @@
     <div class="col col33 pet-info">
       <div class="col-padding">
         <ul>
-          <li><span>Breed:</span> <?php echo $arrayData['pet']['primary_breed']; ?></li>
-          <li><span>Color:</span> <?php echo $arrayData['pet']['color']; ?></li>
-          <li><span>Size:</span> <?php echo $arrayData['pet']['size']; ?></li>
-          <li><span>Sex:</span> <?php echo $arrayData['pet']['sex']; ?></li>
+          <li><span>Breed:</span> <?php echo $pet_breed; ?></li>
+          <li><span>Color:</span> <?php echo $pet_color; ?></li>
+          <li><span>Size:</span> <?php echo $pet_size; ?></li>
+          <li><span>Sex:</span> <?php echo $pet_sex; ?></li>
         </ul>
       </div>
     </div>
 
     <div class="col col33 pet-bio">
       <div class="col-padding">
-        <?php echo $arrayData['pet']['description']; ?>
+        <?php echo $pet_description; ?>
       </div>
     </div>
   </div>
@@ -282,51 +319,108 @@
 
 
 
-<div id="locationFooter">
-  <div class="row row-header">
-    <div class="col col100">
-      <div class="location-title">
-        Adopt & Shop - Culver City
+<!-- lakewood footer -->
+<?php
+if ($pet_location == 'Lakewood'){
+?>
+  <div id="locationFooter">
+    <div class="row row-header">
+      <div class="col col100">
+        <a class="location-title" href="/lakewood-pet-store">Adopt & Shop - Lakewood</a>
       </div>
     </div>
+    <div class="row">
+      <div class="col col33">
+        <div class="col-padding address_phone">
+          353 Lakewood Center Mall<br/>
+          Lakewood, CA 90712<br/><br/>
+          562-531-2871  <br/><br/>
+        </div>
+      </div>
+      <div class="col col33">
+        <div class="col-padding hours">
+          <strong>Store Hours:</strong><br/>
+          Monday through Saturday:<br/>
+          10:00am - 9:00pm<br/><br/>
+          Sunday:<br/>
+          10:00am - 8:00pm<br/><br/>
+        </div>
+      </div>
+
+      <div class="col col33">
+        <div class="col-padding services">
+          <strong>Services Offered:</strong><br/>
+          <ul>
+            <li>Dog Training</li>
+            <li>Pet Microchipping &amp; Registration</li>
+            <li>Nail Trimming</li>
+            <li>Custom ID Tags</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row"></div>
   </div>
-  <div class="row">
-    <div class="col col33">
-      <div class="col-padding address_phone">
-        4235 Sepulveda Blvd.<br/>
-        Culver City, CA 90230<br/><br/>
-        (310) 93-FOUND (933-6863)<br/><br/>
+<?php
+} // end if 
+?>
+<!-- end lakewood footer -->
+
+<!-- culver city footer -->
+<?php
+if ($pet_location == 'Culver City'){
+?>
+  <div id="locationFooter">
+    <div class="row row-header">
+      <div class="col col100">
+        <a class="location-title" href="/culver-city-pet-store">Adopt & Shop - Culver City</a>
       </div>
     </div>
-    <div class="col col33">
-      <div class="col-padding hours">
-        <strong>Store Hours:</strong><br/>
-        Monday through Friday:<br/>
-        10:00am - 9:00pm<br/><br/>
-        Saturday and Sunday:<br/>
-        10:00am - 6:00pm<br/><br/>
+    <div class="row">
+      <div class="col col33">
+        <div class="col-padding address_phone">
+          4235 Sepulveda Blvd.<br/>
+          Culver City, CA 90230<br/><br/>
+          (310) 93-FOUND (933-6863)<br/><br/>
+        </div>
+      </div>
+      <div class="col col33">
+        <div class="col-padding hours">
+          <strong>Store Hours:</strong><br/>
+          Monday through Friday:<br/>
+          10:00am - 9:00pm<br/><br/>
+          Saturday and Sunday:<br/>
+          10:00am - 6:00pm<br/><br/>
+        </div>
+      </div>
+
+      <div class="col col33">
+        <div class="col-padding services">
+          <strong>Services Offered:</strong><br/>
+          <ul>
+            <li>Dog Training</li>
+            <li>Dog Daycare</li>
+            <li>Dog Grooming</li>
+            <li>Pet Microchipping &amp; Registration</li>
+            <li>Nail Trimming</li>
+            <li>Custom ID Tags</li>
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="col col33">
-      <div class="col-padding services">
-        <strong>Services Offered:</strong><br/>
-        <ul>
-          <li>Dog Training</li>
-          <li>Dog Daycare</li>
-          <li>Dog Grooming</li>
-          <li>Pet Microchipping &amp; Registration</li>
-          <li>Nail Trimming</li>
-          <li>Custom ID Tags</li>
-        </ul>
-      </div>
-    </div>
+    <div class="row"></div>
   </div>
+<?php
+} // end if 
+?>
+<!-- end culver city footer -->
 
-  <div class="row"></div>
-</div>
 
 
+
+<!--
 <pre>
   <?php
     echo $path;
@@ -349,6 +443,7 @@
     <?php print_r($arrayData); ?>
   </pre>
 </div>
+-->
 
 <script src="/js/responsive_carousel/responsive-carousel.js"></script>
 <script src="/js/responsive_carousel/responsive-carousel.pagination.js"></script>
