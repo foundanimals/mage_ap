@@ -459,13 +459,13 @@
 				}
 			}
 
-			$('.active-filters').append('<div class="active_filter_all" active-data-filter="all" data-filter-parent="all">Clear Filters <span>x</span></div>');
+			$('.active-filters').append('<div class="active_filter_all" active-data-filter="all" data-filter-parent="all">Clear Filters</div>');
 			$('.active_filter_all').click(function(){
 				$('[data-filter-applied="true"]').each(function(){
 					$(this).click();
 				});
 
-				console.log('remove all');
+				// console.log('remove all');
 			});
 		}
 
@@ -509,21 +509,12 @@
 				pet = _complete_data[i].pet_id;
 				pet_id = 'pet_id_'+ _complete_data[i].pet_id +'';
 				pet_url = _complete_data[i].details_url;
-
 				pet_location = _complete_data[i].addr_city;
-
 				pet_name = _complete_data[i].pet_name;
-				// pet_name = _complete_data[i].pet_name.split(' ')[0];
-				// pet_name = pet_name.split('-')[0];
-				// pet_name = pet_name.split('.')[0];
-				// pet_name = pet_name.split(',')[0];
-
 				pet_age = _complete_data[i].age;
-
 				pet_photo = _complete_data[i].preview_image[0];
 				pet_photo_w = ''+ _complete_data[i].preview_image[1] +'px';
 				pet_photo_h = ''+ _complete_data[i].preview_image[2] +'px';
-
 				pet_sex = _complete_data[i].sex;
 
 				cellFormat = '<div class="pet" id="'+ pet_id +'" data-pet="'+ pet +'" data-pet-url="'+ pet_url +'"><div class="photo_wrapper"><img class="pet_photo" src="'+ pet_photo +'" style="width: '+ pet_photo_w +'; height: '+ pet_photo_h +';" /></div> <div class="pet_name">'+ pet_name +'</div> <div class="pet_info">'+ pet_sex +', <span>'+ pet_age +'</span></div> <div class="pet_city">'+ pet_location +'</div> </div>';
@@ -537,7 +528,6 @@
 				});
 			}
 
-			
 			ap_range_start.html(_total_count);
 			ap_range_end.html(total_count);
 			ap.addClass('ready');
