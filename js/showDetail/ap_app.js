@@ -257,9 +257,16 @@
 				//console.log(key);
 				//console.log(_filter_set[key].length);
 				//console.log(_filter_set[key]);
+				defaultOpen = '';
+				dataFilterOpen = 'false';
 
-				$('.controls').append('<ul class="filter_'+ key +'" data-filter-group="'+ key +'"></ul>');
-				$('.filter_'+ key +'').append('<lh class="filter_header_'+ key +'" data-filter-parent="'+ key +'" data-filter-open="false">'+ key +'</lh>');
+				if (key == 'location'){
+					defaultOpen = 'open';
+					dataFilterOpen = 'true';
+				}
+
+				$('.controls').append('<ul class="filter_'+ key +' '+ defaultOpen +'" data-filter-group="'+ key +'"></ul>');
+				$('.filter_'+ key +'').append('<lh class="filter_header_'+ key +'" data-filter-parent="'+ key +'" data-filter-open="'+ dataFilterOpen +'">'+ key +'</lh>');
 
 				$('.filter_header_'+ key +'').click(function(){
 					if ($(this).attr('data-filter-open') == 'false'){
@@ -414,7 +421,18 @@
 
 		$('.active-filters').html('');
 
+		checkFilters = 0;
 		if (filter_by){
+			for (var key in filter_by){
+				if (filter_by.hasOwnProperty(key)){
+					if (filter_by[key].length > 0){
+						checkFilters = 1;
+					}
+				}
+			}
+		}
+
+		if (checkFilters == 1){
 			for (var key in filter_by){
 				if (filter_by.hasOwnProperty(key)){
 					//console.log(key);
@@ -437,10 +455,18 @@
 								$('*[data-filter="'+ filter +'"]').click();
 							});
 						}
-
 					}
 				}
 			}
+
+			$('.active-filters').append('<div class="active_filter_all" active-data-filter="all" data-filter-parent="all">Clear Filters <span>x</span></div>');
+			$('.active_filter_all').click(function(){
+				$('[data-filter-applied="true"]').each(function(){
+					$(this).click();
+				});
+
+				console.log('remove all');
+			});
 		}
 
 		if (isActive == 1){
@@ -452,7 +478,7 @@
 			$('.filter-key').removeClass('active');
 		}
 
-		location.hash = activeArray;
+		// location.hash = activeArray;
 		// console.log('activeFilters');
 		// console.log(activeArray);
 	}
@@ -506,7 +532,8 @@
 
 				$('#'+ pet_id +'').click(function(){
 					pet = $(this).attr('data-pet');
-					window.open('https://dev.adoptandshop.org/adoptable-pet-detail?'+ pet +'');
+					// window.open('https://dev.adoptandshop.org/adoptable-pet-detail?'+ pet +'');
+					window.location.href = 'https://dev.adoptandshop.org/adoptable-pet-detail?'+ pet +'';
 				});
 			}
 
