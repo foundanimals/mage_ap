@@ -517,15 +517,14 @@
 				pet_photo_h = ''+ _complete_data[i].preview_image[2] +'px';
 				pet_sex = _complete_data[i].sex;
 
-				cellFormat = '<div class="pet" id="'+ pet_id +'" data-pet="'+ pet +'" data-pet-url="'+ pet_url +'"><div class="photo_wrapper"><img class="pet_photo" src="'+ pet_photo +'" style="width: '+ pet_photo_w +'; height: '+ pet_photo_h +';" /></div> <div class="pet_name">'+ pet_name +'</div> <div class="pet_info">'+ pet_sex +', <span>'+ pet_age +'</span></div> <div class="pet_city">'+ pet_location +'</div> </div>';
+				cellFormat = '<a href="/adoptable-pet-detail?'+ pet +'" class="pet" id="'+ pet_id +'" data-pet-url="'+ pet_url +'"><div class="photo_wrapper"><img class="pet_photo" src="'+ pet_photo +'" style="width: '+ pet_photo_w +'; height: '+ pet_photo_h +';" /></div> <div class="pet_name">'+ pet_name +'</div> <div class="pet_info">'+ pet_sex +', <span>'+ pet_age +'</span></div> <div class="pet_city">'+ pet_location +'</div> </a>';
 
 				ap_content.append(cellFormat);
 
-				$('#'+ pet_id +'').click(function(){
-					pet = $(this).attr('data-pet');
-					// window.open('https://dev.adoptandshop.org/adoptable-pet-detail?'+ pet +'');
-					window.location.href = 'https://dev.adoptandshop.org/adoptable-pet-detail?'+ pet +'';
-				});
+				// $('#'+ pet_id +'').click(function(){
+				// 	pet = $(this).attr('data-pet');
+				// 	window.open('https://dev.adoptandshop.org/showdetail?'+ pet +'');
+				// });
 			}
 
 			ap_range_start.html(_total_count);
