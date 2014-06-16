@@ -5,22 +5,6 @@
       <version>0.1.0</version>
     </Fanimal_ShowApp>
   </modules>
-
-
-  <crontab>
-      <jobs>
-          <showapp>
-              <schedule>
-                  <cron_expr>0,15,30,45 * * * *</cron_expr>
-              </schedule>
-              <run>
-                  <model>showapp/observer::data</model>
-              </run>
-          </showapp>
-      </jobs>
-  </crontab>
-
-
   <frontend>
 
     <routers>
@@ -28,39 +12,39 @@
         <use>standard</use>
           <args>
             <module>Fanimal_ShowApp</module>
-            <frontName>adoptable-pets</frontName>
+            <frontName>adoptable-pettt</frontName>
           </args>
       </showapp>
     </routers>
 
-		<layout>
-		  <updates>
-			<showapp>
-			  <file>showapp.xml</file>
-			</showapp>
-		  </updates>
-		</layout>
+    <layout>
+      <updates>
+      <showapp>
+        <file>showapp.xml</file>
+      </showapp>
+      </updates>
+    </layout>
   </frontend>
-
+  
   <global>
     <helpers>
       <showapp>
         <class>Fanimal_ShowApp_Helper</class>
       </showapp>
     </helpers>
-	<blocks>
-	  <showapp>
-		<class>Fanimal_ShowApp_Block</class>
-	  </showapp>
-	</blocks>
-	<models>
-	  <showapp>
-		<class>Fanimal_ShowApp_Model</class>
-		<resourceModel>showapp_mysql4</resourceModel>
-	  </showapp>
-	</models>
+  <blocks>
+    <showapp>
+    <class>Fanimal_ShowApp_Block</class>
+    </showapp>
+  </blocks>
+  <models>
+    <showapp>
+    <class>Fanimal_ShowApp_Model</class>
+    <resourceModel>showapp_mysql4</resourceModel>
+    </showapp>
+  </models>
     <events>
-	  <cms_page_render> <!-- identifier of the event we want to catch -->
+    <cms_page_render> <!-- identifier of the event we want to catch -->
         <observers>
           <cms_page_render_handler> <!-- identifier of the event handler -->
             <type>model</type> <!-- class method call type; valid are model, object and singleton -->

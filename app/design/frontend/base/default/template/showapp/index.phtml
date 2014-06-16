@@ -1,3 +1,8 @@
+<?php
+    Mage::getModel('fanimal/showapp')->data();
+?>
+
+
 <style>
     body {
         background: #eee;
@@ -279,29 +284,32 @@
         float: left;
         padding-left: 30px;
     }
+    
+    #ap_sorting .paging_controls {
+        float: left;
+    }
+    #ap_sorting .paging_controls div {
+        float: left;
+        color: #7C837C;
+        text-decoration: none;
+        padding-top: 12px;
+        cursor: pointer;
+    }
+    #ap_sorting .paging_controls div:hover {
+        color: #31788C;
+        cursor: pointer;
+    }
+    #ap_sorting .paging_controls div.active {
+        color: #31788C;
+        pointer-events: none;
+    }
+
     #ap_sorting .paging span,
     #ap_sorting .paging_controls span {
         display: block;
         float: left;
         color: #7C837C;
         padding-top: 12px;
-    }
-    #ap_sorting .paging_controls {
-        float: left;
-    }
-    #ap_sorting .paging_controls a {
-        float: left;
-        color: #7C837C;
-        text-decoration: none;
-        padding-top: 12px;
-    }
-    #ap_sorting .paging_controls a:hover {
-        color: #31788C;
-        cursor: pointer;
-    }
-    #ap_sorting .paging_controls a.active {
-        color: #31788C;
-        pointer-events: none;
     }
 
 
@@ -471,11 +479,16 @@
             <div id="ap_sorting">
                 <div class="range"><div>showing&nbsp;</div> <div class="range_start">0</div> <div>&nbsp;of&nbsp;</div> <div class="range_end">0</div> <div>&nbsp;records</div></div>
                 
-                <!--
-                <div class="viewable"><span>View</span> <div class="viewable_dropdown"></div></div>
+                
+                <div class="viewable" data-viewable="10"><span>View</span> <div class="viewable_dropdown">10</div></div>
                 <div class="sorting"><span>Sort by</span> <div class="sorting_dropdown"></div></div>
-                <div class="paging"><span>Page:&nbsp;</span> <div class="paging_controls"><a href="" class="active">1</a><span>&nbsp;</span> <a href="">2</a><span>&nbsp;</span> <a href="">3</a><span>&nbsp;</span> <a href="" class="last">></a><span>&nbsp;</span> </div></div>
-                -->
+
+                <div class="paging"><span>Page:&nbsp;</span> 
+                    <div class="paging_controls">
+                        <!--<a href="" class="active">1</a><span>&nbsp;</span> <a href="">2</a><span>&nbsp;</span> <a href="">3</a><span>&nbsp;</span> <a href="" class="last">></a><span>&nbsp;</span> -->
+                    </div>
+                </div>
+                
             </div>
             <div id="ap_content"></div>
         </div>

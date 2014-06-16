@@ -29,6 +29,11 @@
 	var ap_modal_city = $('.pet_details_city > span');
 	var ap_modal_photos = $('.pet_details_photos');
 
+	var view_count = 10;
+	var view_offset = 0;
+	var sort_by = '';
+	var ap_paging = $('.paging_controls');
+
 	var ap_range_start = $('.range_start');
 	var ap_range_end = $('.range_end');
 
@@ -485,12 +490,44 @@
 
 
 	var applySorting = function(){
+
 		// sort pet_name by alpha
 		_complete_data = _complete_data.sort(function(a, b){
 			if (a.pet_name < b.pet_name) return 1;
 		    if (b.pet_name < a.pet_name) return -1;
 		    return 0;
 		}).reverse();
+
+		
+		total_count = complete_data.length;
+
+		pages = total_count / view_count;
+		console.log(pages);
+
+		pages = Math.round(parseFloat(pages, 10));
+		console.log(pages);
+
+
+		ap_paging.html('');
+		for (i = 0; i < pages; i++){
+			i_offset = i + 1;
+			ap_paging.append('<div class="view-offset-'+ i +'" data-offset="'+ i +'">'+ i_offset +'</div><span>&nbsp;</span>');
+			
+			$('.view-offset-'+ i +'').click(function(e){
+				e.preventDefault();
+				view_offset = $(this).attr('data-offset');
+				//viewable = $('.viewable').attr('data-viewable');
+
+				view_offset = view_offset * view_count;
+				console.log(view_offset);
+				
+				__complete_data = _complete_data.slice(view_offset, view_offset + view_count);
+				console.log(__complete_data);
+			});
+		}
+
+		// _complete_data = _complete_data.slice(view_offset, view_offset + view_count);
+		
 
 		format();
 	}
