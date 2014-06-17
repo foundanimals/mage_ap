@@ -302,6 +302,12 @@
 
         <div class="carousel" data-paginate>
           <?php 
+            // [images] => Array
+            //     (
+            //     )
+
+
+
             $images = $arrayData['pet']['images'];
             foreach ($images as $image){
               echo '<div><img src="'. $image['original_url'] .'" width="'. $image['original_width'] .'" height="'. $image['original_height'] .'" /></div>';
@@ -434,7 +440,7 @@ if ($pet_location == 'Culver City'){
 
 
 
-<!--
+
 <pre>
   <?php
     echo $path;
@@ -457,7 +463,7 @@ if ($pet_location == 'Culver City'){
     <?php print_r($arrayData); ?>
   </pre>
 </div>
--->
+
 
 <script src="/js/responsive_carousel/responsive-carousel.js"></script>
 <script src="/js/responsive_carousel/responsive-carousel.pagination.js"></script>

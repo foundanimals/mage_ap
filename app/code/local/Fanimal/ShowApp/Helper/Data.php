@@ -25,6 +25,7 @@ class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
      
       // execute
       $output = curl_exec($ch);
+      $location_data[] = json_decode($output, true);
      
       // if ($output === FALSE) {
       //   return "cURL Error: " . curl_error($ch);
@@ -34,15 +35,13 @@ class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
      
       // close instance
       curl_close($ch);
-
-      $location_data[] = json_decode($output, true);
     }
 
 
     foreach ($location_data as $location){
       foreach ($location['pets'] as $pet){
         $url = $pet['details_url'];
-        // $url = str_replace('limited_', '', $url);
+        $url = str_replace('limited_', '', $url);
         $urls[] = $url;
       }
     }
@@ -58,6 +57,7 @@ class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
      
       // execute
       $output = curl_exec($ch);
+      $output = json_decode($output, true);
      
       // if ($output === FALSE) {
       //   return "cURL Error: " . curl_error($ch);
@@ -67,8 +67,22 @@ class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
      
       // close instance
       curl_close($ch);
+    
+      $output['pet']['location'] = array($output['pet']['addr_city']);
+      $output['pet']['url'] = $url;
 
-      $pets[] = json_decode($output, true);
+
+      //[images] => Array
+      //          (
+      //          )
+
+      $output['pet']['preview_image'] = array(
+        $output['pet']['images'][0]['thumbnail_url'], 
+        $output['pet']['images'][0]['thumbnail_width'], 
+        $output['pet']['images'][0]['thumbnail_height']
+      );
+
+      $pets[] = $output['pet'];
     }
 
     $pets = json_encode($pets);
