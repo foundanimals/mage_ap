@@ -2,6 +2,8 @@
 class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
+  // can be used to call helper:
+  // Mage::helper('showapp/data')->data();
   public function data()
   {
     $dirPath = Mage::getBaseDir('var') . DS . 'adoptapet';

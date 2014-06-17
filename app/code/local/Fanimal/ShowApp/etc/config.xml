@@ -6,15 +6,20 @@
     </Fanimal_ShowApp>
   </modules>
 
-
+  <!-- 
+  ssh into root, open crontab:
+    crontab -e
+  add the following line:
+    0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/sh /var/www/magento_dev/cron.sh
+  -->
   <crontab>
       <jobs>
           <showapp>
               <schedule>
-                  <cron_expr>0,15,30,45 * * * *</cron_expr>
+                  <cron_expr>0,5,10,15,20,25,30,35,40,45,50,55 * * * *</cron_expr>
               </schedule>
               <run>
-                  <model>showapp/observer::data</model>
+                  <model>showapp/observer::cron</model>
               </run>
           </showapp>
       </jobs>
@@ -22,7 +27,6 @@
 
 
   <frontend>
-
     <routers>
       <showapp>
         <use>standard</use>
@@ -41,6 +45,7 @@
 		  </updates>
 		</layout>
   </frontend>
+  
 
   <global>
     <helpers>
