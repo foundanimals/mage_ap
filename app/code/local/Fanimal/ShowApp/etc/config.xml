@@ -10,13 +10,14 @@
   ssh into root, open crontab:
     crontab -e
   add the following line:
-    0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/sh /var/www/magento_dev/cron.sh
+    0 10,12,14,18,20 * * * /bin/sh /var/www/magento_dev/cron.sh
+  runs at 10am 12pm 2pm 6pm 8pm
   -->
   <crontab>
       <jobs>
           <showapp>
               <schedule>
-                  <cron_expr>0,5,10,15,20,25,30,35,40,45,50,55 * * * *</cron_expr>
+                  <cron_expr>0 10,12,14,18,20 * * *</cron_expr>
               </schedule>
               <run>
                   <model>showapp/observer::cron</model>

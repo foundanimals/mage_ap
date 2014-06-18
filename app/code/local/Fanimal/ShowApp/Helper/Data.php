@@ -2,6 +2,12 @@
 class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
 {
 
+  public function copy()
+  {
+    // for production, rename this path accordingly
+    copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento_dev/showDetail/data/data.txt');
+  }
+
   // can be used to call helper:
   // Mage::helper('showapp/data')->data();
   public function data()

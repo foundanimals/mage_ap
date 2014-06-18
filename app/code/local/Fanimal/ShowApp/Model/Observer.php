@@ -90,5 +90,8 @@ class Fanimal_ShowApp_Model_Observer
       $dirPath. DS .'data.txt', 
       print_r($pets, true)
     );
+
+    // for production, rename this path accordingly
+    copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento_dev/showDetail/data/data.txt');
   }
 }

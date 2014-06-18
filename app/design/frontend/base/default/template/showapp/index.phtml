@@ -1,4 +1,6 @@
 <?php
+    // Mage::helper('showapp/data')->copy();
+
     $dirPath = Mage::getBaseDir('var') . DS . 'adoptapet';
     $dir = file_get_contents($dirPath . DS . 'data.txt');
 ?>
@@ -505,7 +507,7 @@
 
 <script>
     // a json string built by magento
-    window.ap_data = <?php echo $dir; ?>;
+    // window.ap_data = <?php echo $dir; ?>;
 </script>
 
 <script src="js/showDetail/vendor/underscore-min.js"></script>

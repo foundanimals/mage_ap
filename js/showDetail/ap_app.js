@@ -76,6 +76,20 @@
 		// console.log('apApp: '+ locations.length +' locations');
 
 		if (ap_setting = 'file'){
+
+			// $.getJSON( "/showDetail/data/data.txt", function(json) {
+  			// 		window.app_data = json;
+ 			// 	});
+
+ 			$.ajax({
+				type: 'get',
+				url: '/showDetail/data/data.txt'
+			}).done(function(data, textStatus, jqXHR){
+				window.app_data = data;
+			}).fail(function(jqXHR, textStatus, errorThrown){
+				console.log('failed');
+			});
+
 			complete_data = window.ap_data;
 			parseColors();
 		}
