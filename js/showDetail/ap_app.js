@@ -81,17 +81,30 @@
   			// 		window.app_data = json;
  			// 	});
 
- 			$.ajax({
-				type: 'get',
-				url: '/showDetail/data/data.txt'
+			url = ''+ window.location.href.split(window.location.pathname)[0] +'/showDetail/data/data.txt';
+
+			$.ajax({
+				type: 'post',
+				url: '/showDetail/getData.php',
+				data: {data_url: url}
 			}).done(function(data, textStatus, jqXHR){
-				window.app_data = data;
+				complete_data = JSON.parse(data);
+				console.log(complete_data);
+				parseColors();
 			}).fail(function(jqXHR, textStatus, errorThrown){
 				console.log('failed');
 			});
 
-			complete_data = window.ap_data;
-			parseColors();
+ 		// 	$.ajax({
+			// 	type: 'get',
+			// 	url: '/showDetail/data/data.txt'
+			// }).done(function(data, textStatus, jqXHR){
+			// 	window.ap_data = data;
+			// 	complete_data = window.ap_data;
+			// 	parseColors();
+			// }).fail(function(jqXHR, textStatus, errorThrown){
+			// 	console.log('failed');
+			// });
 		}
 		else {
 			if (locations.length > 0){
@@ -191,6 +204,7 @@
 	var parseColors = function(){
 		for (var key in complete_data){
 			if (complete_data.hasOwnProperty(key)){
+				console.log(complete_data[key].color);
 				complete_data[key].color_array = complete_data[key].color.toLowerCase();
 				complete_data[key].color_array = returnColors(complete_data[key].color_array);
 			}
