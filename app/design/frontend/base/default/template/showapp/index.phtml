@@ -1,8 +1,8 @@
 <?php
     // Mage::helper('showapp/data')->copy();
 
-    $dirPath = Mage::getBaseDir('var') . DS . 'adoptapet';
-    $dir = file_get_contents($dirPath . DS . 'data.txt');
+    // $dirPath = Mage::getBaseDir('var') . DS . 'adoptapet';
+    // $dir = file_get_contents($dirPath . DS . 'data.txt');
 ?>
 
 
@@ -486,10 +486,10 @@
                 <div class="range"><div>showing&nbsp;</div> <div class="range_start">0</div> <div>&nbsp;of&nbsp;</div> <div class="range_end">0</div> <div>&nbsp;records</div></div>
                 
                 
-                <div class="viewable" data-viewable="10"><span>View</span> <div class="viewable_dropdown">10</div></div>
-                <div class="sorting"><span>Sort by</span> <div class="sorting_dropdown"></div></div>
+                <div style="display: none;" class="viewable" data-viewable="10"><span>View</span> <div class="viewable_dropdown">10</div></div>
+                <div style="display: none;"  class="sorting"><span>Sort by</span> <div class="sorting_dropdown"></div></div>
 
-                <div class="paging"><span>Page:&nbsp;</span> 
+                <div style="display: none;"  class="paging"><span>Page:&nbsp;</span> 
                     <div class="paging_controls">
                         <!--<a href="" class="active">1</a><span>&nbsp;</span> <a href="">2</a><span>&nbsp;</span> <a href="">3</a><span>&nbsp;</span> <a href="" class="last">></a><span>&nbsp;</span> -->
                     </div>
@@ -501,16 +501,6 @@
     </div>
 </div>
 
-<!-- 
-<script src="js/vendor/jquery-1.11.0.min.js"></script>
--->
-
-<script>
-    // a json string built by magento
-    // window.ap_data = <?php echo $dir; ?>;
-</script>
-
 <script src="js/showDetail/vendor/underscore-min.js"></script>
-
 <script src="js/showDetail/ap_app.js"></script>
 

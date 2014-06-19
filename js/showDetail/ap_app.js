@@ -76,11 +76,6 @@
 		// console.log('apApp: '+ locations.length +' locations');
 
 		if (ap_setting = 'file'){
-
-			// $.getJSON( "/showDetail/data/data.txt", function(json) {
-  			// 		window.app_data = json;
- 			// 	});
-
 			url = ''+ window.location.href.split(window.location.pathname)[0] +'/showDetail/data/data.txt';
 
 			$.ajax({
@@ -89,22 +84,10 @@
 				data: {data_url: url}
 			}).done(function(data, textStatus, jqXHR){
 				complete_data = JSON.parse(data);
-				console.log(complete_data);
 				parseColors();
 			}).fail(function(jqXHR, textStatus, errorThrown){
 				console.log('failed');
 			});
-
- 		// 	$.ajax({
-			// 	type: 'get',
-			// 	url: '/showDetail/data/data.txt'
-			// }).done(function(data, textStatus, jqXHR){
-			// 	window.ap_data = data;
-			// 	complete_data = window.ap_data;
-			// 	parseColors();
-			// }).fail(function(jqXHR, textStatus, errorThrown){
-			// 	console.log('failed');
-			// });
 		}
 		else {
 			if (locations.length > 0){
@@ -199,12 +182,11 @@
 
 
 	/* parses colors, helper function for 'file' ap_setting
-	** skips getData and getDetails which is run on the php side
+	** skips getData and getDetails, loads file with same data
 	*/
 	var parseColors = function(){
 		for (var key in complete_data){
 			if (complete_data.hasOwnProperty(key)){
-				console.log(complete_data[key].color);
 				complete_data[key].color_array = complete_data[key].color.toLowerCase();
 				complete_data[key].color_array = returnColors(complete_data[key].color_array);
 			}
@@ -603,9 +585,9 @@
 				pet_location = _complete_data[i].addr_city;
 				pet_name = _complete_data[i].pet_name;
 				pet_age = _complete_data[i].age;
-				pet_photo = _complete_data[i].preview_image[0];
-				pet_photo_w = ''+ _complete_data[i].preview_image[1] +'px';
-				pet_photo_h = ''+ _complete_data[i].preview_image[2] +'px';
+				pet_photo = _complete_data[i].images[0]['original_url'];
+				pet_photo_w = ''+ _complete_data[i].images[0]['original_width'] +'px';
+				pet_photo_h = ''+ _complete_data[i].images[0]['original_height'] +'px';
 				pet_sex = _complete_data[i].sex;
 
 				if (pet_photo == null || pet_photo == 'null'){

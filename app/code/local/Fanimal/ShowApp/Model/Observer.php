@@ -76,9 +76,9 @@ class Fanimal_ShowApp_Model_Observer
       //          )
 
       $output['pet']['preview_image'] = array(
-        $output['pet']['images'][0]['thumbnail_url'], 
-        $output['pet']['images'][0]['thumbnail_width'], 
-        $output['pet']['images'][0]['thumbnail_height']
+        $output['pet']['images'][0]['original_url'], 
+        $output['pet']['images'][0]['original_width'], 
+        $output['pet']['images'][0]['original_height']
       );
 
       $pets[] = $output['pet'];
