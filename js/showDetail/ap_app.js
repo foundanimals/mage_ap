@@ -579,7 +579,7 @@
 			_total_count = _complete_data.length;
 
 			for (var i = 0; i < _complete_data.length; i++){
-				console.log(_complete_data[i]);
+				// console.log(_complete_data[i]);
 
 				pet = _complete_data[i].pet_id;
 				pet_id = 'pet_id_'+ _complete_data[i].pet_id +'';
