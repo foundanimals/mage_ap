@@ -6,6 +6,7 @@ class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
   {
     // for production, rename this path accordingly
     copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento_dev/showDetail/data/data.txt');
+    // copy('/var/www/magento/var/adoptapet/data.txt', '/var/www/magento/showDetail/data/data.txt');
   }
 
   // can be used to call helper:
@@ -99,6 +100,9 @@ class Fanimal_ShowApp_Helper_Data extends Mage_Core_Helper_Abstract
       $dirPath. DS .'data.txt', 
       print_r($pets, true)
     );
+
+    copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento_dev/showDetail/data/data.txt');
+    // copy('/var/www/magento/var/adoptapet/data.txt', '/var/www/magento/showDetail/data/data.txt');
   }
 }
 	 

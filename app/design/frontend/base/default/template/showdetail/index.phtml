@@ -307,10 +307,15 @@
             //     )
 
 
+            if (is_array($arrayData['pet']['images']) && count($arrayData['pet']['images']) > 1){
+              $images = $arrayData['pet']['images'];
 
-            $images = $arrayData['pet']['images'];
-            foreach ($images as $image){
-              echo '<div><img src="'. $image['original_url'] .'" width="'. $image['original_width'] .'" height="'. $image['original_height'] .'" /></div>';
+              foreach ($images as $image){
+                echo '<div><img src="'. $image['original_url'] .'" width="'. $image['original_width'] .'" height="'. $image['original_height'] .'" /></div>';
+              }
+            }
+            else {
+              echo '<div><img class="pet_photo" src="/img/no-dog.gif" style="width: ; height: ;"></div>';
             }
           ?>
         </div>
@@ -329,7 +334,14 @@
 
     <div class="col col33 pet-bio">
       <div class="col-padding">
-        <?php echo $pet_description; ?>
+        <?php   
+          if ($pet_description == 'unlisted'){
+            echo '';
+          }
+          else {
+            echo $pet_description; 
+          }
+        ?>
       </div>
     </div>
   </div>
@@ -440,7 +452,7 @@ if ($pet_location == 'Culver City'){
 
 
 
-
+<!--
 <pre>
   <?php
     echo $path;
@@ -463,6 +475,7 @@ if ($pet_location == 'Culver City'){
     <?php print_r($arrayData); ?>
   </pre>
 </div>
+-->
 
 
 <script src="/js/responsive_carousel/responsive-carousel.js"></script>

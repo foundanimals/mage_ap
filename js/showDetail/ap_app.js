@@ -579,21 +579,25 @@
 			_total_count = _complete_data.length;
 
 			for (var i = 0; i < _complete_data.length; i++){
+				console.log(_complete_data[i]);
+
 				pet = _complete_data[i].pet_id;
 				pet_id = 'pet_id_'+ _complete_data[i].pet_id +'';
 				pet_url = _complete_data[i].details_url;
 				pet_location = _complete_data[i].addr_city;
 				pet_name = _complete_data[i].pet_name;
 				pet_age = _complete_data[i].age;
-				pet_photo = _complete_data[i].images[0]['original_url'];
-				pet_photo_w = ''+ _complete_data[i].images[0]['original_width'] +'px';
-				pet_photo_h = ''+ _complete_data[i].images[0]['original_height'] +'px';
 				pet_sex = _complete_data[i].sex;
 
-				if (pet_photo == null || pet_photo == 'null'){
+				if (_complete_data[i].images.length == 0){
 					pet_photo = '/img/no-dog.gif';
 					pet_photo_w = '';
 					pet_photo_h = '';
+				}
+				else {
+					pet_photo = _complete_data[i].images[0]['original_url'];
+					pet_photo_w = ''+ _complete_data[i].images[0]['original_width'] +'px';
+					pet_photo_h = ''+ _complete_data[i].images[0]['original_height'] +'px';
 				}
 
 				cellFormat = '<a href="/adoptable-pet-detail?'+ pet +'" class="pet" id="'+ pet_id +'" data-pet-url="'+ pet_url +'"><div class="photo_wrapper"><img class="pet_photo" src="'+ pet_photo +'" style="width: '+ pet_photo_w +'; height: '+ pet_photo_h +';" /></div> <div class="pet_name">'+ pet_name +'</div> <div class="pet_info">'+ pet_sex +', <span>'+ pet_age +'</span></div> <div class="pet_city">'+ pet_location +'</div> </a>';
