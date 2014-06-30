@@ -9,9 +9,10 @@
   <!-- 
   ssh into root, open crontab:
     crontab -e
-  add the following lines:
+  add the following lines (including the blank new line):
     0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/sh /var/www/magento_dev/cron.sh
     0,5,10,15,20,25,30,35,40,45,50,55 * * * * /bin/sh /var/www/magento/cron.sh
+
   -->
   <crontab>
       <jobs>

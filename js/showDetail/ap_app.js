@@ -537,10 +537,10 @@
 		total_count = complete_data.length;
 
 		pages = total_count / view_count;
-		// console.log(pages);
+		console.log(pages);
 
 		pages = Math.round(parseFloat(pages, 10));
-		// console.log(pages);
+		console.log(pages);
 
 
 		ap_paging.html('');
@@ -554,14 +554,14 @@
 				//viewable = $('.viewable').attr('data-viewable');
 
 				view_offset = view_offset * view_count;
-				console.log(view_offset);
+				console.log('view count: '+ view_count +'');
+				console.log('view offset: '+ view_offset +'');
 				
-				__complete_data = _complete_data.slice(view_offset, view_offset + view_count);
 				console.log(__complete_data);
 			});
 		}
 
-		// _complete_data = _complete_data.slice(view_offset, view_offset + view_count);
+		_complete_data = _complete_data.slice(view_offset, view_offset + view_count);
 		
 
 		format();
