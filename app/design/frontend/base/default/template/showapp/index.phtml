@@ -238,6 +238,7 @@
     #ap_sorting .range {
         float: right;
         padding-right: 1%;
+        margin-top: 12px;
     }
     #ap_sorting .range > div {
         float: left;
@@ -286,17 +287,22 @@
     }
     #ap_sorting .paging {
         float: left;
+        width: 175px;
         padding-left: 30px;
     }
     
     #ap_sorting .paging_controls {
-        float: left;
+        _float: left;
     }
     #ap_sorting .paging_controls div {
         float: left;
         color: #7C837C;
+        min-width: 12px;
+        text-align: center;
         text-decoration: none;
-        padding-top: 12px;
+        margin-top: 12px;
+        margin-right: 2px;
+        padding: 0 1%;
         cursor: pointer;
     }
     #ap_sorting .paging_controls div:hover {
@@ -305,6 +311,8 @@
     }
     #ap_sorting .paging_controls div.active {
         color: #31788C;
+        background: #eee;
+        border-radius: 3px;
         pointer-events: none;
     }
 

@@ -30,10 +30,7 @@
 	var ap_modal_city = $('.pet_details_city > span');
 	var ap_modal_photos = $('.pet_details_photos');
 
-	var view_count = 10;
-	var view_offset = 0;
-	var sort_by = '';
-	var ap_paging = $('.paging_controls');
+	
 
 	var ap_range_start = $('.range_start');
 	var ap_range_end = $('.range_end');
@@ -45,6 +42,8 @@
 
 	var complete_data = [];
 	var _complete_data = [];
+	var __complete_data = [];
+	var _complete_data_filtered = [];
 
 	var filter_count = 0;
 
@@ -524,7 +523,15 @@
 	}
 
 
+
+
+	var view_count = 10;
+	var view_offset = 0;
+	var sort_by = '';
+	var ap_paging = $('.paging_controls');
+
 	var applySorting = function(){
+		view_offset = 0;
 
 		// sort pet_name by alpha
 		_complete_data = _complete_data.sort(function(a, b){
@@ -534,36 +541,69 @@
 		}).reverse();
 
 		
-		total_count = complete_data.length;
+		total_count = _complete_data.length;
 
 		pages = total_count / view_count;
-		console.log(pages);
+		pages = Math.floor(parseFloat(pages, 10));
+		
+		pages_remainder = total_count - (pages * view_count);
 
-		pages = Math.round(parseFloat(pages, 10));
-		console.log(pages);
+
+		console.log('total_count '+ total_count +'');
+		console.log('view_count '+ view_count +'');
+		console.log('pages '+ pages +'');
+		console.log('pages remainder '+ pages_remainder +'');
+		console.log('view offset: '+ view_offset +'');
+		console.log('view count: '+ view_count +'');
+
+
+
+		if (pages_remainder > 0){
+			pages = pages + 1;
+		}
+		console.log('pages adjusted '+ pages +'');
 
 
 		ap_paging.html('');
 		for (i = 0; i < pages; i++){
 			i_offset = i + 1;
-			ap_paging.append('<div class="view-offset-'+ i +'" data-offset="'+ i +'">'+ i_offset +'</div><span>&nbsp;</span>');
+
+			if (i != 0){
+				ap_paging.append('<div class="view-offset-'+ i +'" data-offset="'+ i +'">'+ i_offset +'</div>');
+			}
+			else {
+				ap_paging.append('<div class="view-offset-'+ i +' active" data-offset="'+ i +'">'+ i_offset +'</div>');
+			}
+			
 			
 			$('.view-offset-'+ i +'').click(function(e){
 				e.preventDefault();
-				view_offset = $(this).attr('data-offset');
-				//viewable = $('.viewable').attr('data-viewable');
 
-				view_offset = view_offset * view_count;
+				$('.paging_controls div').each(function(){
+					$(this).removeClass('active');
+				});
+				$(this).addClass('active');
+
+				view_offset = $(this).attr('data-offset');
+
+				if (view_offset != 0){
+					view_offset = view_offset * view_count;
+				}
+
+				console.log('view_offset '+ view_offset +'');
 				console.log('view count: '+ view_count +'');
-				console.log('view offset: '+ view_offset +'');
 				
-				console.log(__complete_data);
+				_complete_data_filtered = _complete_data.slice(view_offset, view_offset + view_count);
+				// console.log(_complete_data_filtered);
+
+				format();
 			});
 		}
 
-		_complete_data = _complete_data.slice(view_offset, view_offset + view_count);
-		
 
+		_complete_data_filtered = _complete_data;
+		_complete_data_filtered = _complete_data.slice(view_offset, view_offset + view_count);
+		
 		format();
 	}
 
@@ -574,30 +614,36 @@
 		// console.log('format');
 		// console.log(_complete_data);
 
-		if (_complete_data.length){
-			total_count = complete_data.length;
-			_total_count = _complete_data.length;
+		ap_content.html('');
 
-			for (var i = 0; i < _complete_data.length; i++){
+		if (_complete_data_filtered.length){
+			total_count = _complete_data.length;
+			_total_count = view_count;
+
+			if (_total_count > total_count){
+				_total_count = total_count;
+			}
+
+			for (var i = 0; i < _complete_data_filtered.length; i++){
 				// console.log(_complete_data[i]);
 
-				pet = _complete_data[i].pet_id;
-				pet_id = 'pet_id_'+ _complete_data[i].pet_id +'';
-				pet_url = _complete_data[i].details_url;
-				pet_location = _complete_data[i].addr_city;
-				pet_name = _complete_data[i].pet_name;
-				pet_age = _complete_data[i].age;
-				pet_sex = _complete_data[i].sex;
+				pet = _complete_data_filtered[i].pet_id;
+				pet_id = 'pet_id_'+ _complete_data_filtered[i].pet_id +'';
+				pet_url = _complete_data_filtered[i].details_url;
+				pet_location = _complete_data_filtered[i].addr_city;
+				pet_name = _complete_data_filtered[i].pet_name;
+				pet_age = _complete_data_filtered[i].age;
+				pet_sex = _complete_data_filtered[i].sex;
 
-				if (_complete_data[i].images.length == 0){
+				if (_complete_data_filtered[i].images.length == 0){
 					pet_photo = '/img/no-dog.gif';
 					pet_photo_w = '';
 					pet_photo_h = '';
 				}
 				else {
-					pet_photo = _complete_data[i].images[0]['original_url'];
-					pet_photo_w = ''+ _complete_data[i].images[0]['original_width'] +'px';
-					pet_photo_h = ''+ _complete_data[i].images[0]['original_height'] +'px';
+					pet_photo = _complete_data_filtered[i].images[0]['original_url'];
+					pet_photo_w = ''+ _complete_data_filtered[i].images[0]['original_width'] +'px';
+					pet_photo_h = ''+ _complete_data_filtered[i].images[0]['original_height'] +'px';
 				}
 
 				cellFormat = '<a href="/adoptable-pet-detail?'+ pet +'" class="pet" id="'+ pet_id +'" data-pet-url="'+ pet_url +'"><div class="photo_wrapper"><img class="pet_photo" src="'+ pet_photo +'" style="width: '+ pet_photo_w +'; height: '+ pet_photo_h +';" /></div> <div class="pet_name">'+ pet_name +'</div> <div class="pet_info">'+ pet_sex +', <span>'+ pet_age +'</span></div> <div class="pet_city">'+ pet_location +'</div> </a>';
