@@ -18,7 +18,7 @@
       <jobs>
           <showapp>
               <schedule>
-                  <cron_expr>0 8,12,17 * * *</cron_expr>
+                  <cron_expr>0 8,12,16,20 * * *</cron_expr>
               </schedule>
               <run>
                   <model>showapp/observer::cron</model>
