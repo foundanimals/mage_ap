@@ -93,6 +93,6 @@ class Fanimal_ShowApp_Model_Observer
 
     // for production, rename this path accordingly
     copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento_dev/showDetail/data/data.txt');
-    // copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento/showDetail/data/data.txt');
+    copy('/var/www/magento_dev/var/adoptapet/data.txt', '/var/www/magento/showDetail/data/data.txt');
   }
 }
