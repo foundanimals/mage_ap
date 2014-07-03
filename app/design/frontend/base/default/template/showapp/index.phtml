@@ -107,6 +107,7 @@
         float: left;
         color: #31788C;
         color: #444;
+        color: #fff;
         font-size: 14px;
         text-transform: capitalize;
         padding: 0 20px 0 1.5%;
@@ -125,7 +126,7 @@
         width: 7px;
         height: 7px;
         text-indent: -2000px;
-        background: url(/img/filter_close.gif) center center no-repeat transparent;
+        background: url(/img/filter_close_white.gif) center center no-repeat transparent;
     }
      #ap_filters .active-filters div.active_filter_all {
         width: 100%;
@@ -188,11 +189,11 @@
         overflow: hidden;
         position: relative;
         display: none;
-        width: 78%;
+        width: 77.5%;
         font-size: 14px;
         font-family: 'proximanova-regular';
         text-transform: capitalize;
-        padding: 0 1%;
+        padding: 0 1.25%;
         margin: 0 10%;
         margin-bottom: 3px;
         cursor: pointer;
@@ -506,7 +507,7 @@
 
         <div class="ap_body">
             <div id="ap_sorting">
-                <div class="range"><div>showing&nbsp;</div> <div class="range_start">0</div> <div>&nbsp;of&nbsp;</div> <div class="range_end">0</div> <div>&nbsp;records</div></div>
+                <div class="range"><div>showing&nbsp;</div> <div class="range_origin">0</div><div class="range_origin_space">-</div><div class="range_start">0</div> <div>&nbsp;of&nbsp;</div> <div class="range_end">0</div> <div>&nbsp;records</div></div>
                 
                 <div class="viewable" data-viewable="10">
                     <span>View</span>
@@ -520,9 +521,11 @@
                     </div>
                 </div>
                 
+                <!--
                 <div class="sorting">
                     <span>Sort by</span>
                 </div>
+                -->
 
                 <div class="paging"><span>Page:&nbsp;</span> 
                     <div class="paging_controls">

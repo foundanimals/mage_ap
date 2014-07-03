@@ -31,9 +31,13 @@
 	var ap_modal_photos = $('.pet_details_photos');
 
 	
-
+	var ap_range_origin = $('.range_origin');
+	var ap_range_origin_space = $('.range_origin_space');
 	var ap_range_start = $('.range_start');
 	var ap_range_end = $('.range_end');
+
+	var ap_paging = $('.paging_controls');
+
 
 	var total_locations = 0;
 
@@ -527,7 +531,8 @@
 	var view_offset = 0;
 	var view_count = 12;
 	var sort_by = '';
-	var ap_paging = $('.paging_controls');
+	var pages = 0;
+	
 
 	$('#view_count').change(function(){
 		applySorting();
@@ -616,19 +621,48 @@
 	/* takes complete_data and produces html for presentation
 	*/
 	var format = function(){
+		console.log(pages);
+
+
 		// console.log('format');
 		// console.log(_complete_data);
 
 		ap_content.html('');
+		ap_range_origin.show();
+		ap_range_origin_space.show();
 
 		if (_complete_data_filtered.length){
-
 			total_count = _complete_data.length;
-			_total_count = view_count;
 
-			if (_total_count > _complete_data_filtered.length){
-				_total_count = _complete_data_filtered.length;
+			_total_count = view_offset;
+			if (_total_count == 0){
+				_total_count = view_count;
 			}
+			else {
+				_total_count = view_offset + view_count;
+			}
+
+
+			total_count_origin = _total_count - view_count + 1;
+
+			if (_total_count > total_count || _total_count == total_count){
+				_total_count = _complete_data.length;
+			}
+
+			if (_total_count == total_count && total_count == total_count_origin){
+				ap_range_origin.hide();
+				ap_range_origin_space.hide();
+			}
+			else if (pages == 0 || pages == 1){
+				ap_range_origin.hide();
+				ap_range_origin_space.hide();
+			}
+			else if ($('#view_count').val() == 'all'){
+				ap_range_origin.hide();
+				ap_range_origin_space.hide();
+			}
+
+			
 
 
 			for (var i = 0; i < _complete_data_filtered.length; i++){
@@ -663,6 +697,7 @@
 				// });
 			}
 
+			ap_range_origin.html(total_count_origin);
 			ap_range_start.html(_total_count);
 			ap_range_end.html(total_count);
 			ap.addClass('ready');
