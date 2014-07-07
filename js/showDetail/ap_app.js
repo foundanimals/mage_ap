@@ -7,37 +7,16 @@
 
 	var ap = $('#ap_container');
 	var ap_content = $('#ap_content');
+	var ap_range_origin = $('.range_origin');
+	var ap_range_origin_space = $('.range_origin_space');
+	var ap_range_start = $('.range_start');
+	var ap_range_end = $('.range_end');
+	var ap_paging = $('.paging_controls');
 
 	var locations = [
 		['http://api.adoptapet.com/search/pets_at_shelter?key=95052e1b892a28c5f89f696edf39b4ec&shelter_id=87677&output=json'],
 		['http://api.adoptapet.com/search/pets_at_shelter?key=ffa2f34adb6076ce7aba8162fb899d64&shelter_id=87678&output=json']
 	];
-
-	var ap_modal = $('#ap_modal');
-	var ap_modal_close = $('#ap_modal_close');
-	var ap_modal_content = $('#ap_modal_content');
-	var ap_modal_name = $('.pet_details_name > span');
-	var ap_modal_color = $('.pet_details_color > span');
-	var ap_modal_species = $('.pet_details_species > span');
-	var ap_modal_age = $('.pet_details_age > span');
-	var ap_modal_sex = $('.pet_details_sex > span');
-	var ap_modal_size = $('.pet_details_size > span');
-	var ap_modal_hair = $('.pet_details_hair > span');
-	var ap_modal_primary = $('.pet_details_primary > span');
-	var ap_modal_primary_pure = $('.pet_details_pure > span');
-	var ap_modal_secondary = $('.pet_details_secondary > span');
-	var ap_modal_special_needs = $('.pet_details_special_needs > span');
-	var ap_modal_city = $('.pet_details_city > span');
-	var ap_modal_photos = $('.pet_details_photos');
-
-	
-	var ap_range_origin = $('.range_origin');
-	var ap_range_origin_space = $('.range_origin_space');
-	var ap_range_start = $('.range_start');
-	var ap_range_end = $('.range_end');
-
-	var ap_paging = $('.paging_controls');
-
 
 	var total_locations = 0;
 
@@ -45,9 +24,8 @@
 	var total_pets_i = 0;
 
 	var complete_data = [];
-	var _complete_data = [];
-	var __complete_data = [];
-	var _complete_data_filtered = [];
+	var complete_data_filtered = [];
+	var complete_data_sorted = [];
 
 	var filter_count = 0;
 
@@ -370,14 +348,14 @@
 	}
 
 
-	/* recreates complete_data as _complete_data
+	/* recreates complete_data as complete_data_filtered
 	** applies selected filters
 	*/
 	var applyFilters = function(){
 		ap.attr('class', '');
 		ap_content.html('');
 
-		_complete_data = [];
+		complete_data_filtered = [];
 
 		// create a count of active filters
 		// pets will need to clear all active filters
@@ -444,13 +422,13 @@
 			}
 
 			if (_filter_count === filter_count){
-				_complete_data.push(complete_data[i]);
+				complete_data_filtered.push(complete_data[i]);
 			}
 		}
 
-		_complete_data = _.uniq(_complete_data, false);
+		complete_data_filtered = _.uniq(complete_data_filtered, false);
 
-		// console.log(_complete_data);
+		// console.log(complete_data_filtered);
 		// console.log('applyFilters: complete');
 
 		applySorting();
@@ -540,7 +518,7 @@
 
 	var applySorting = function(){
 		view_offset = 0;
-		total_count = _complete_data.length;
+		total_count = complete_data_filtered.length;
 		
 		view_count = $('#view_count').val();
 		if (view_count === 'all'){
@@ -565,7 +543,7 @@
 
 
 		// sort pet_name by alpha
-		_complete_data = _complete_data.sort(function(a, b){
+		complete_data_filtered = complete_data_filtered.sort(function(a, b){
 			if (a.pet_name < b.pet_name) return 1;
 		    if (b.pet_name < a.pet_name) return -1;
 		    return 0;
@@ -602,8 +580,8 @@
 				$(this).addClass('active');
 
 				
-				_complete_data_filtered = _complete_data.slice(view_offset, _view_offset);
-				// console.log(_complete_data_filtered);
+				complete_data_sorted = complete_data_filtered.slice(view_offset, _view_offset);
+				// console.log(complete_data_sorted);
 
 				format();
 			});
@@ -612,7 +590,7 @@
 			ap_paging.append('<div class="view-offset-0 active" data-offset="0">1</div>');
 		}
 
-		_complete_data_filtered = _complete_data.slice(view_offset, view_count);
+		complete_data_sorted = complete_data_filtered.slice(view_offset, view_count);
 		
 		format();
 	}
@@ -625,14 +603,14 @@
 
 
 		// console.log('format');
-		// console.log(_complete_data);
+		// console.log(complete_data_sorted);
 
 		ap_content.html('');
 		ap_range_origin.show();
 		ap_range_origin_space.show();
 
-		if (_complete_data_filtered.length){
-			total_count = _complete_data.length;
+		if (complete_data_sorted.length){
+			total_count = complete_data_filtered.length;
 
 			_total_count = view_offset;
 			if (_total_count == 0){
@@ -646,7 +624,7 @@
 			total_count_origin = _total_count - view_count + 1;
 
 			if (_total_count > total_count || _total_count == total_count){
-				_total_count = _complete_data.length;
+				_total_count = complete_data_filtered.length;
 			}
 
 			if (_total_count == total_count && total_count == total_count_origin){
@@ -665,26 +643,26 @@
 			
 
 
-			for (var i = 0; i < _complete_data_filtered.length; i++){
-				// console.log(_complete_data[i]);
+			for (var i = 0; i < complete_data_sorted.length; i++){
+				// console.log(complete_data_sorted[i]);
 
-				pet = _complete_data_filtered[i].pet_id;
-				pet_id = 'pet_id_'+ _complete_data_filtered[i].pet_id +'';
-				pet_url = _complete_data_filtered[i].details_url;
-				pet_location = _complete_data_filtered[i].addr_city;
-				pet_name = _complete_data_filtered[i].pet_name;
-				pet_age = _complete_data_filtered[i].age;
-				pet_sex = _complete_data_filtered[i].sex;
+				pet = complete_data_sorted[i].pet_id;
+				pet_id = 'pet_id_'+ complete_data_sorted[i].pet_id +'';
+				pet_url = complete_data_sorted[i].details_url;
+				pet_location = complete_data_sorted[i].addr_city;
+				pet_name = complete_data_sorted[i].pet_name;
+				pet_age = complete_data_sorted[i].age;
+				pet_sex = complete_data_sorted[i].sex;
 
-				if (_complete_data_filtered[i].images.length == 0){
+				if (complete_data_sorted[i].images.length == 0){
 					pet_photo = '/img/no-dog.gif';
 					pet_photo_w = '';
 					pet_photo_h = '';
 				}
 				else {
-					pet_photo = _complete_data_filtered[i].images[0]['original_url'];
-					pet_photo_w = ''+ _complete_data_filtered[i].images[0]['original_width'] +'px';
-					pet_photo_h = ''+ _complete_data_filtered[i].images[0]['original_height'] +'px';
+					pet_photo = complete_data_sorted[i].images[0]['original_url'];
+					pet_photo_w = ''+ complete_data_sorted[i].images[0]['original_width'] +'px';
+					pet_photo_h = ''+ complete_data_sorted[i].images[0]['original_height'] +'px';
 				}
 
 				cellFormat = '<a href="/adoptable-pet-detail?'+ pet +'" class="pet" id="'+ pet_id +'" data-pet-url="'+ pet_url +'"><div class="photo_wrapper"><img class="pet_photo" src="'+ pet_photo +'" style="width: '+ pet_photo_w +'; height: '+ pet_photo_h +';" /></div> <div class="pet_name">'+ pet_name +'</div> <div class="pet_info">'+ pet_sex +', <span>'+ pet_age +'</span></div> <div class="pet_city">'+ pet_location +'</div> </a>';
@@ -711,72 +689,6 @@
 
 			// console.log('format: there is no data');
 		}
-	}
-
-
-	var modal = function(url){
-		ap.attr('class', '');
-
-		$.ajax({
-			type: 'post',
-			url: '/showDetail/getData.php',
-			data: {data_url: url}
-		}).done(function(data, textStatus, jqXHR){
-			data = JSON.parse(data);
-
-			console.log('modal');
-			console.log(data);
-
-			ap_modal_name.html(data['pet']['pet_name']);
-			ap_modal_color.html(data['pet']['color']);
-			ap_modal_species.html(data['pet']['species']);
-			ap_modal_age.html(data['pet']['age']);
-			ap_modal_sex.html(data['pet']['sex']);
-			ap_modal_size.html(data['pet']['size']);
-			ap_modal_hair.html(data['pet']['hair_length']);
-			ap_modal_primary.html(data['pet']['primary_breed']);
-			ap_modal_primary_pure.html(data['pet']['purebred']);
-			ap_modal_secondary.html(data['pet']['secondary_breed']);
-			ap_modal_special_needs.html(data['pet']['special_needs']);
-			ap_modal_city.html(data['pet']['addr_city']);
-
-
-			if (data['pet']['images']){
-				ap_modal_photos.html('');
-				for (var i = 0; i < data['pet']['images'].length; i++){
-					ap_modal_photos.append('<img src="'+ data['pet']['images'][i]['original_url'] +'" />');
-				}
-
-				for (var i = 0; i < data['pet']['images'].length; i++){
-					ap_modal_photos.append('<img src="'+ data['pet']['images'][i]['thumbnail_url'] +'" />');
-				}
-			}
-			else {
-				ap_modal_photos.html('');
-			}
-
-
-			$('#pet_details_content div').each(function(){
-				span = $(this).find('span').html();
-				if (span == 0 || span == null){
-					$(this).addClass('no-value');
-				}
-				else {
-					$(this).removeClass('no-value');
-				}
-			});
-
-			ap.addClass('ready');
-			ap.addClass('details_active');
-
-			ap_modal_close.click(function(){
-				ap.removeClass('details_active');
-			});
-		}).fail(function(jqXHR, textStatus, errorThrown){
-			ap.addClass('ready');
-			console.log('modal: proxy or service failure');
-			alert('modal: proxy or service failure');
-		});
 	}
 
 

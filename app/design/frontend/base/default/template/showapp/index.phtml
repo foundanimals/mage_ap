@@ -1,10 +1,6 @@
 <?php
-    // Mage::helper('showapp/data')->data();
-
-    // $dirPath = Mage::getBaseDir('var') . DS . 'adoptapet';
-    // $dir = file_get_contents($dirPath . DS . 'data.txt');
+    // Mage::helper('showapp/data')->data(); // uncomment to manually generate data file
 ?>
-
 
 <style>
     body {
@@ -52,7 +48,6 @@
         width: 720px;
     }
 
-
     #ap_filters {
         width: 100%;
     }
@@ -67,7 +62,6 @@
         background: #31788C;
         border-radius: 3px 3px 0 0;
     }
-
     #ap_filters .filter-key {
         position: relative;
         width: 100%;
@@ -96,6 +90,7 @@
     #ap_filters .filter-key.active .sub-title {
         display: none;
     }
+
     #ap_filters .active-filters {
         float: left;
         width: 80%;
@@ -149,7 +144,6 @@
         background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 75%,rgba(255,255,255,0) 100%);
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 );
     }
-
     #ap_filters ul {
         clear: both;
         width: 100%;
@@ -225,7 +219,6 @@
         display: block;
     }
     
-
     #ap_sorting {
         display: inline-block;
         color: #eee;
@@ -244,9 +237,6 @@
         float: left;
         color: #7C837C;
     }
-
-
-
     #ap_sorting .viewable {
         float: left;
         padding-left: 30px;
@@ -283,9 +273,6 @@
         opacity: 0;
         z-index: 10;
     }
-
-
-
     #ap_sorting .sorting {
         float: left;
         padding-left: 30px;
@@ -308,7 +295,6 @@
         width: 175px;
         padding-left: 30px;
     }
-    
     #ap_sorting .paging_controls {
         _float: left;
     }
@@ -401,97 +387,13 @@
         font-weight: bold;
         text-align: center;
     }
-
-    
-
-    #ap_modal {
-        display: none;
-        position: fixed;
-        top: 5%;
-        left: 15%;
-        width: 70%;
-        background: rgba(49, 120, 140, 0.7);
-        border-radius: 7px;
-        z-index: 150;
-    }
-    .details_active #ap_modal {
-        display: block;
-    }
-
-    #ap_modal_mask {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.5);
-        z-index: 100;
-    }
-    .details_active #ap_modal_mask {
-        display: block;
-    }
-
-    #ap_modal_close {
-        position: absolute;
-        top: -3%;
-        right: -3%;
-        color: #fff;
-        padding: 3%;
-        background: rgba(49, 120, 140, 0.7);
-        border-radius: 9999px;
-        cursor: pointer;
-    }
-
-    #ap_modal #ap_modal_body {
-        overflow: hidden;
-        margin: 1%;
-        background: #fff;
-        border-radius: 4px;
-    }
-
-    #ap_modal .ap_modal_body #ap_modal_content {
-        padding: 2%;
-    }
-
-    #ap_modal_content div.no-value {
-        color: red !important;
-    }
-
-    #ap_modal_content .pet_details_pure {
-        display: inline-block;
-    }
 </style>
 </head>
 <body>
 
-<div id="ap_container">
-    <div id="ap_modal_mask"></div>
-
-    <div id="ap_modal">
-        <div id="ap_modal_close">
-            close
-        </div>
-
-        <div id="ap_modal_body">
-            <div id="ap_modal_content">
-                <div class="pet_details_name">Name: <span></span></div>
-                <div class="pet_details_color">Color: <span></span></div>
-                <div class="pet_details_species">Species: <span></span></div>
-                <div class="pet_details_age">Age: <span></span></div>
-                <div class="pet_details_sex">Sex: <span></span></div>
-                <div class="pet_details_size">Size: <span></span></div>
-                <div class="pet_details_hair">Hair Length: <span></span></div>
-                <div class="pet_details_primary">Primary Breed: <span></span> <div class="pet_details_pure"><span></span></div> </div>
-                <div class="pet_details_secondary">Secondary Breed: <span></span></div>
-                <div class="pet_details_special_needs">Special Needs: <span></span></div>
-                <div class="pet_details_city">City: <span></span></div>
-                <div class="pet_details_photos"></div>
-            </div>
-        </div>
-    </div>
-    
+<div id="ap_container">    
     <div id="ap_layout">
+
         <div id="ap_loading">loading</div>
 
         <div class="ap_left">
@@ -520,25 +422,19 @@
                        </select>
                     </div>
                 </div>
-                
-                <!--
-                <div class="sorting">
-                    <span>Sort by</span>
-                </div>
-                -->
 
                 <div class="paging"><span>Page:&nbsp;</span> 
                     <div class="paging_controls">
                         <!--<a href="" class="active">1</a><span>&nbsp;</span> <a href="">2</a><span>&nbsp;</span> <a href="">3</a><span>&nbsp;</span> <a href="" class="last">></a><span>&nbsp;</span> -->
                     </div>
                 </div>
-                
             </div>
+
             <div id="ap_content"></div>
         </div>
+
     </div>
 </div>
 
 <script src="js/showDetail/vendor/underscore-min.js"></script>
 <script src="js/showDetail/ap_app.js"></script>
-
